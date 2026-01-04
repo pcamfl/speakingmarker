@@ -16,7 +16,7 @@
             --border-col: #ccc;
             --header-bg: #e3f2fd;
             --setup-bg: #eef2f5;
-            --footer-bg: #e3f2fd;
+            --footer-bg: #dbe4e9;
             --input-bg: #ffffff;
             --input-text: #000000;
             --timer-idle: #e2e6ea;
@@ -61,7 +61,6 @@
             --btn-sec-bg: #555;
             --btn-sec-text: #e0e0e0;
             --rubric-bg: #2c2c2c;
-            /* Table headers remain white/black for excel export */
             --th-bg: #ffffff; 
             --th-text: #000000;
             --table-row-even: #2c2c2c;
@@ -71,7 +70,7 @@
         body { 
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
             background: var(--bg-color); color: var(--text-color); padding: 15px; font-size: 14px; 
-            padding-bottom: 180px; /* Space for fixed footer */
+            padding-bottom: 140px; /* Space for fixed footer */
             transition: background 0.3s, color 0.3s;
         }
         .container { 
@@ -87,7 +86,7 @@
 
         details.setup-panel { background: var(--setup-bg); border: 1px solid var(--border-col); padding: 8px; border-radius: 5px; margin-bottom: 15px; }
         details.setup-panel summary { cursor: pointer; font-weight: bold; color: var(--pearson-blue); }
-        textarea { width: 100%; height: 80px; margin-top: 5px; padding: 8px; border: 1px solid var(--border-col); border-radius: 4px; font-family: monospace; background: var(--input-bg); color: var(--input-text); }
+        textarea.setup-area { width: 100%; height: 80px; margin-top: 5px; padding: 8px; border: 1px solid var(--border-col); border-radius: 4px; font-family: monospace; background: var(--input-bg); color: var(--input-text); }
         
         .header-panel { 
             display: flex; gap: 15px; background: var(--header-bg); padding: 15px; border-radius: 6px; 
@@ -154,76 +153,67 @@
         }
         .rubric-content b { color: var(--pearson-blue); display: inline-block; width: 40px; }
 
-        /* --- FIXED FOOTER (Redesigned for Compactness) --- */
+        /* --- FIXED FOOTER (Ultra Compact) --- */
         .fixed-footer { 
             position: fixed; bottom: 0; left: 0; width: 100%; 
             background: var(--footer-bg); border-top: 3px solid var(--pearson-blue);
-            box-shadow: 0 -4px 15px rgba(0,0,0,0.15); z-index: 1000; padding: 10px 20px;
-            display: flex; flex-direction: column; gap: 8px;
+            box-shadow: 0 -4px 15px rgba(0,0,0,0.15); z-index: 2000; 
+            padding: 10px 20px;
+            display: flex; align-items: center; justify-content: space-between; gap: 15px;
         }
 
-        .feedback-row { 
-            display: flex; gap: 10px; flex-wrap: wrap; 
-            align-items: flex-start; /* Aligns items to top so they stack neatly */
+        .footer-left { 
+            display: flex; gap: 10px; align-items: center; flex: 1; 
         }
 
-        /* Flex properties for responsive behavior */
-        .fb-group { 
-            display: flex; gap: 10px; flex: 1 1 auto; 
-            flex-wrap: wrap; /* Allows dropdowns to wrap on very small screens */
-        }
+        .fb-item { width: 110px; } /* Fixed width for alignment */
+        .fb-item label { display: block; font-size: 0.7em; font-weight: bold; margin-bottom: 2px; color: var(--pearson-blue); white-space: nowrap; overflow: hidden; }
+        .fb-item select { width: 100%; font-size: 0.8em; padding: 2px; height: 26px; background: var(--card-bg); color: var(--text-color); border: 1px solid var(--border-col); border-radius: 3px; }
         
-        .fb-item { 
-            flex: 1 1 130px; /* Base width 130px, grows to fill space */
-            min-width: 120px; 
-        }
-        
-        .fb-comment { 
-            flex: 1 1 250px; /* Takes more space, wraps to next line if needed */
-            min-width: 200px;
-        }
-
-        .fb-item label { display: block; font-size: 0.75em; font-weight: bold; margin-bottom: 2px; color: var(--pearson-blue); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .fb-item select { width: 100%; font-size: 0.85em; padding: 4px; background: var(--card-bg); color: var(--text-color); border: 1px solid var(--border-col); border-radius: 3px; }
-        .fb-comment textarea { 
+        .fb-comment { flex: 1; max-width: 250px; }
+        .fb-comment label { display: block; font-size: 0.7em; font-weight: bold; margin-bottom: 2px; color: var(--pearson-blue); }
+        .fb-comment input { 
             width: 100%; padding: 4px; border: 1px solid var(--border-col); border-radius: 3px; 
-            font-size: 0.9em; background: var(--card-bg); color: var(--text-color); height: 32px; resize: none; font-family: inherit;
+            font-size: 0.85em; background: var(--card-bg); color: var(--text-color); height: 26px;
         }
-        .fb-comment textarea:focus { height: 60px; position: absolute; bottom: 60px; right: 20px; width: 300px; z-index: 2000; box-shadow: 0 0 10px rgba(0,0,0,0.2); }
 
-        /* Controls Row */
-        .controls-row { display: flex; justify-content: space-between; align-items: center; padding-top: 5px; border-top: 1px solid rgba(0,0,0,0.05); }
-        
-        .stats-wrapper { display: flex; align-items: center; gap: 15px; }
-        .total-display { font-size: 1.3em; font-weight: bold; color: var(--pearson-blue); }
+        .footer-right { 
+            display: flex; gap: 15px; align-items: center; padding-right: 20px; border-left: 1px solid rgba(0,0,0,0.1); padding-left: 15px;
+        }
+
+        .total-display { font-size: 1.4em; font-weight: bold; color: var(--pearson-blue); white-space: nowrap;}
         
         .global-timer {
             background: var(--card-bg); color: var(--pearson-blue); border: 1px solid var(--pearson-blue);
-            font-size: 1em; padding: 4px 12px; border-radius: 20px; cursor: pointer; font-family: monospace; font-weight: bold; user-select: none;
+            font-size: 1em; padding: 4px 10px; border-radius: 4px; cursor: pointer; font-family: monospace; font-weight: bold; user-select: none;
+            white-space: nowrap;
         }
         .global-timer:hover { background: var(--timer-idle); }
         .global-timer.running { background: var(--timer-running); color: var(--timer-text-running); border-color: var(--timer-text-running); animation: pulse 2s infinite; }
         .global-timer.paused { background: var(--timer-paused); color: var(--timer-text-paused); border-color: var(--timer-text-paused); }
 
-        .btn-wrapper { display: flex; gap: 10px; }
-        button { padding: 8px 20px; border: none; border-radius: 4px; font-size: 14px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        .btn-wrapper { display: flex; gap: 8px; }
+        button { padding: 8px 15px; border: none; border-radius: 4px; font-size: 13px; font-weight: bold; cursor: pointer; transition: 0.2s; white-space: nowrap; }
         button.primary { background: var(--pearson-green); color: white; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
         button.primary:hover { background: #00663f; transform: translateY(-1px); }
         button.secondary { background: var(--btn-sec-bg); color: var(--btn-sec-text); }
         button.secondary:hover { opacity: 0.9; }
 
         /* Output Table */
-        .table-wrapper { margin-top: 40px; overflow-x: auto; }
+        .table-wrapper { margin-top: 40px; overflow-x: auto; padding-bottom: 20px;}
         table { width: 100%; border-collapse: collapse; font-size: 0.9em; white-space: nowrap; background: var(--card-bg); color: var(--text-color); }
         th, td { border: 1px solid var(--border-col); padding: 8px; text-align: center; }
-        th { background-color: var(--th-bg) !important; color: var(--th-text) !important; border-bottom: 2px solid #000; }
+        
+        /* Excel Optimized Headers */
+        th { background-color: #ffffff !important; color: #000000 !important; border-bottom: 2px solid #000; font-weight: bold; }
+        
         tr:nth-child(even) { background: var(--table-row-even); }
         tr:hover { background: var(--table-row-hover); }
         .delete-btn { background: var(--pearson-red); color: white; padding: 2px 8px; font-size: 11px; border-radius: 3px; cursor: pointer; border: none; }
 
         /* Footer Credit */
         footer { 
-            text-align: right; margin-top: 40px; padding-top: 10px; border-top: 1px solid var(--border-col); 
+            text-align: right; margin-top: 20px; padding-top: 10px; border-top: 1px solid var(--border-col); 
             font-size: 0.8em; color: #777; font-style: italic;
         }
     </style>
@@ -240,7 +230,7 @@
         <summary>⚙️ Setup: Import Class List (Click to expand)</summary>
         <div style="padding: 10px 0;">
             <label>Paste Candidate List (e.g. from Excel - Name/Number):</label>
-            <textarea id="candidateListInput" placeholder="John Smith - 1001&#10;Jane Doe - 1002&#10;..."></textarea>
+            <textarea class="setup-area" id="candidateListInput" placeholder="John Smith - 1001&#10;Jane Doe - 1002&#10;..."></textarea>
             <button type="button" class="secondary" onclick="loadClassList()" style="margin-top: 10px;">Load Class List</button>
             <span id="setupMsg" style="margin-left: 10px; color: var(--pearson-green); font-weight: bold;"></span>
         </div>
@@ -375,7 +365,7 @@
                 </div>
                 
                 <div class="task-row">
-                    <span class="task-label">Pic. Desc. (AO2) /4</span>
+                    <span class="task-label">Pic. Desc. (AO2 Content) /4</span>
                     <select id="t3_pic_ao2" class="mark-select" data-name="Pic Desc AO2" onchange="calcTotal()">
                         <option value="" disabled selected>- Select -</option>
                         <option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option>
@@ -383,7 +373,7 @@
                     <details class="rubric"><summary></summary><div class="rubric-content" id="rubric_t3_pic_ao2"></div></details>
                 </div>
                 <div class="task-row">
-                    <span class="task-label">Pic. Desc. (AO3) /4</span>
+                    <span class="task-label">Pic. Desc. (AO3 Grammar) /4</span>
                     <select id="t3_pic_ao3" class="mark-select" data-name="Pic Desc AO3" onchange="calcTotal()">
                         <option value="" disabled selected>- Select -</option>
                         <option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option>
@@ -415,7 +405,7 @@
                 <hr style="border:0; border-top:1px solid var(--border-col); margin: 15px 0;">
 
                 <div class="task-row">
-                    <span class="task-label">Conv. (AO1) /12</span>
+                    <span class="task-label">Conversation (AO1 Comm.) /12</span>
                     <select id="t3_conv_ao1" class="mark-select" data-name="Conv AO1" onchange="calcTotal()">
                         <option value="" disabled selected>- Select -</option>
                         <option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option>
@@ -426,7 +416,7 @@
                     <details class="rubric"><summary></summary><div class="rubric-content" id="rubric_t3_conv_ao1"></div></details>
                 </div>
                 <div class="task-row">
-                    <span class="task-label">Conv. (AO3) /4</span>
+                    <span class="task-label">Conversation (AO3 Grammar) /4</span>
                     <select id="t3_conv_ao3" class="mark-select" data-name="Conv AO3" onchange="calcTotal()">
                         <option value="" disabled selected>- Select -</option>
                         <option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option>
@@ -437,32 +427,56 @@
         </div>
 
         <div class="fixed-footer">
-            <div class="feedback-row">
-                <div class="fb-group">
-                    <div class="fb-item">
-                        <label>Timeframes</label>
-                        <select id="fb_timeframes"><option value="">-</option><option>Consistently successful</option><option>Frequently successful</option><option>Generally successful</option><option>Some success</option><option>Limited success</option></select>
-                    </div>
-                    <div class="fb-item">
-                        <label>Opinions</label>
-                        <select id="fb_opinions"><option value="">-</option><option>Fully justified</option><option>Justifies opinions</option><option>Simple opinions</option><option>Limited/None</option></select>
-                    </div>
-                    <div class="fb-item">
-                        <label>Interaction</label>
-                        <select id="fb_interaction"><option value="">-</option><option>Spontaneous</option><option>Sustains conversation</option><option>Needs prompting</option><option>Rehearsed language</option></select>
-                    </div>
-                    <div class="fb-item">
-                        <label>Vocab Range</label>
-                        <select id="fb_vocab"><option value="">-</option><option>Wide range</option><option>Variety</option><option>Some variety</option><option>Occasional variety</option><option>Limited</option></select>
-                    </div>
+            <div class="footer-left">
+                <div class="fb-item">
+                    <label>Timeframes</label>
+                    <select id="fb_timeframes">
+                        <option value="">-</option>
+                        <option>Consistently successful</option>
+                        <option>Frequently successful</option>
+                        <option>Generally successful</option>
+                        <option>Some success</option>
+                        <option>Limited success</option>
+                    </select>
+                </div>
+                <div class="fb-item">
+                    <label>Opinions</label>
+                    <select id="fb_opinions">
+                        <option value="">-</option>
+                        <option>Fully justified</option>
+                        <option>Gives/Justifies</option>
+                        <option>Simple opinions</option>
+                        <option>Limited/None</option>
+                    </select>
+                </div>
+                <div class="fb-item">
+                    <label>Interaction</label>
+                    <select id="fb_interaction">
+                        <option value="">-</option>
+                        <option>Spontaneous</option>
+                        <option>Sustains</option>
+                        <option>Needs prompting</option>
+                        <option>Rehearsed</option>
+                    </select>
+                </div>
+                <div class="fb-item">
+                    <label>Vocab</label>
+                    <select id="fb_vocab">
+                        <option value="">-</option>
+                        <option>Wide range</option>
+                        <option>Variety</option>
+                        <option>Some variety</option>
+                        <option>Occasional</option>
+                        <option>Limited</option>
+                    </select>
                 </div>
                 <div class="fb-comment">
-                    <label>Comments</label>
-                    <textarea id="fb_comments" placeholder="Notes..."></textarea>
+                    <label>Notes</label>
+                    <input type="text" id="fb_comments" placeholder="Comments...">
                 </div>
             </div>
 
-            <div class="controls-row">
+            <div class="footer-right">
                 <div class="stats-wrapper">
                     <span class="total-display">Score: <span id="currentTotal">0</span>/50</span>
                     <div id="timer_total" class="global-timer" onclick="toggleTimer('total')" ondblclick="resetTimer('total')">⏱️ 0:00</div>
@@ -483,11 +497,16 @@
         <table id="outputTable">
             <thead>
                 <tr>
-                    <th>Action</th><th>Name</th><th>Tier</th><th>Total</th>
-                    <th>T1 Read</th><th>T1 Q1</th><th>T1 Q2</th>
-                    <th>T2 P1</th><th>T2 P2</th><th>T2 P3</th><th>T2 P4</th><th>T2 P5</th>
-                    <th>T3 Desc AO2</th><th>T3 Desc AO3</th><th>T3 Q1</th><th>T3 Q2</th>
-                    <th>T3 Conv AO1</th><th>T3 Conv AO3</th>
+                    <th>Action</th><th>Name</th><th>Tier</th><th>Total /50</th>
+                    <th>1.1: Read aloud short passage /8</th>
+                    <th>1.2.1: Straightforward Question /2</th>
+                    <th>1.2.2: Straightforward Question /2</th>
+                    <th>2: Role Play Communication /10</th>
+                    <th>3.1: Describe one picture /8</th>
+                    <th>3.2.1: Unprepared question /2</th>
+                    <th>3.2.2: Unprepared question /2</th>
+                    <th>3.3.1: Conv Response /12</th>
+                    <th>3.3.2: Knowledge Accuracy /4</th>
                     <th>Timeframes</th><th>Opinions</th><th>Interact</th><th>Vocab</th><th>Comments</th>
                 </tr>
             </thead>
@@ -745,11 +764,20 @@
 
         const gv = (id) => document.getElementById(id).value;
 
+        // CALCULATE AGGREGATES
+        const rolePlayTotal = (parseInt(gv('t2_p1'))||0) + (parseInt(gv('t2_p2'))||0) + (parseInt(gv('t2_p3'))||0) + (parseInt(gv('t2_p4'))||0) + (parseInt(gv('t2_p5'))||0);
+        const picTotal = (parseInt(gv('t3_pic_ao2'))||0) + (parseInt(gv('t3_pic_ao3'))||0);
+
         const data = [
-            gv('t1_read'), gv('t1_q1'), gv('t1_q2'),
-            gv('t2_p1'), gv('t2_p2'), gv('t2_p3'), gv('t2_p4'), gv('t2_p5'),
-            gv('t3_pic_ao2'), gv('t3_pic_ao3'), gv('t3_q1'), gv('t3_q2'),
-            gv('t3_conv_ao1'), gv('t3_conv_ao3'),
+            gv('t1_read'), // 1.1
+            gv('t1_q1'),   // 1.2.1
+            gv('t1_q2'),   // 1.2.2
+            rolePlayTotal, // 2 (Combined)
+            picTotal,      // 3.1 (Combined)
+            gv('t3_q1'),   // 3.2.1
+            gv('t3_q2'),   // 3.2.2
+            gv('t3_conv_ao1'), // 3.3.1
+            gv('t3_conv_ao3'), // 3.3.2
             document.getElementById('fb_timeframes').value,
             document.getElementById('fb_opinions').value,
             document.getElementById('fb_interaction').value,
@@ -771,7 +799,10 @@
 
         data.forEach(d => {
             let td = document.createElement('td');
-            td.innerText = (d === "") ? "-" : d;
+            td.innerText = (d === "" || d === 0) ? "-" : d; // Show 0 as dash or number?
+            // If it's a number 0, we might want to show "0". If it's missing (empty string), show "-"
+            if (d === 0) td.innerText = "0";
+            if (d === "") td.innerText = "-";
             tr.appendChild(td);
         });
 
